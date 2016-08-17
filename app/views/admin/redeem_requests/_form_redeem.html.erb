@@ -1,0 +1,10 @@
+<td><%= @redeem.user.full_name %></td>
+<td><%= @redeem.user.bank_account %></td>
+<td><%= @redeem.user.bank_account_number %></td>
+<td><%= @redeem.amount %></td>
+<td><%= select_tag "redeem_status[]", options_for_select([ ["pending", 0], ["paid", 1] ], @redeem.status), {:class => "form-control"} %></td>
+<td><%= @redeem.created_at.strftime("%b %d %Y") %></td>
+<td class="center">
+  <%= link_to 'Save', "javascript:void(0)", onclick: "update_redeem(this, #{@redeem.id})" %> |
+  <%= link_to 'Cancel', edit_admin_redeem_request_path(@redeem.id, cancel: true), remote: true %>
+</td>

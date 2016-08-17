@@ -1,0 +1,81 @@
+<table cellspacing="0" border="0" cellpadding="0" width="100%">	
+	<tr>
+		<td>
+			<table cellspacing="0" bgcolor="#fff" width="100%" cellpadding="0", style="border-bottom: 2px solid #ff0000;">
+				<tr>
+					<td height="50" valign="top">
+						<table cellspacing="0" align="center" width="100%" cellpadding="0">
+							<tr>
+								<td class="header-text" align="center" style="color: #FFF; font-family: Verdana; font-size: 10px; text-transform: uppercase; padding: 5px 20px;">
+									<a href="" class="" style="color: #00ffff; text-decoration: none; display:inline-block"><%= image_tag attachments['tuckbox_logo.png'].url, :style => "max-width: 40px; vertical-align:middle;" %>&nbsp;&nbsp;&nbsp;<strong style="font-size: 18px;color: #db1417;vertical-align:middle; margin-left:5px">TUCKERBOX</strong></a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>	
+	<tr>
+		<td>
+			<table cellspacing="0" width="100%" cellpadding="0" >
+				<tr>
+					<td valign="top">
+						<table cellspacing="0" align="center" width="600" cellpadding="0">
+							<tr>
+								<td class="main-title" style="padding: 60px 20px 10px 20px; font-family: Proxima Nova,Sans-serif; letter-spacing: 1px;" colspan="2">
+									<h3 style="font-weight: 400"> Hi,
+										<font color="#ff0000" style="font-weight: bold"> <%= @invite.first_name.titleize %></font><br>
+									</h3>
+									<p style="text-align:justify; padding-bottom:8px; font-size: 14px">You've successfully reserved <font color="#ff0000" style="font-weight: bold"><%= @invite.username %></font> on TuckerBox! See you when we launch.</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0px 20px 30px 20px; font-family: Proxima Nova,Sans-serif; letter-spacing: 1px;">
+									<h4 style="font-weight:bold; color:#ff0000; display:inline-block;">- Team TuckerBox -</h4>
+								</td>
+								<td>
+									<ul style="padding: 5px 0px 30px 200px; font-family: Proxima Nova,Sans-serif; letter-spacing: 1px; vertical-align:middle">
+									  <li style="list-style-type:none; display:inline">
+									  	<a href="https://www.facebook.com/tuckerboxapp" style="background-color:#ff0000; border-radius:4px; display:inline-block; width: 30px; height:30px; padding: 0px">
+									  		<%= image_tag attachments['fb.png'].url, :style => "width:30px; display:block" %>
+									  	</a>
+									  </li> &nbsp;&nbsp;
+									  <li style="list-style-type:none; display:inline">
+									  	<a href="https://twitter.com/tuckerboxapp" style="background-color:#ff0000; border-radius:4px; display:inline-block; width: 30px; height:30px; padding: 0px">
+									  		<%= image_tag attachments['twit.png'].url, :style => "width:30px; display:block" %>
+									  	</a>
+									  </li>&nbsp;&nbsp;
+									  <li style="list-style-type:none; display:inline">
+									  	<a href="https://www.instagram.com/tuckerboxapp/" style="background-color:#ff0000; border-radius:4px; display:inline-block; width: 30px; height:30px;padding: 0px">
+									  		<%= image_tag attachments['ig.png'].url, :style => "width:30px; display:block" %>
+									  	</a>
+									  </li>&nbsp;&nbsp;
+									</ul>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>	
+	
+	<tr>
+		<td valign="top">
+			<table cellspacing="0" width="100%" cellpadding="0">
+				<tr>
+					<td valign="top">
+						<table cellspacing="0" width="100%" cellpadding="0">
+							<tr>
+								<td class="copyright" align="center" valign="top" style="color: #FFF; font-family: Verdana; font-size: 12px; text-align: center; line-height: 20px; padding:5px 0" bgcolor="#ff0000">
+									<p>If you didn't create a TuckerBox account using this e-mail address, <a href="mailto:support@tuckerbox.es" style="font-weight:bold; color:#5f5f5f" target="_top">let us know</a></p>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>

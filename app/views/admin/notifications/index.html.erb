@@ -1,0 +1,60 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>
+      Notifications
+      <small>
+        <i class="fa fa-angle-double-right"></i>
+        list
+      </small>
+    </h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Push Notification</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <%= render :partial => 'notif_list'%>
+          <%= paginate @notifs %>
+        </div><!-- /.box-body -->
+      </div>
+    </div><!--/.span-->
+  </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<%= content_for(:extra_js) do %>
+  <!--[if IE]>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <![endif]-->
+
+  <!--[if !IE]>-->
+
+  <script type="text/javascript">
+    window.jQuery || document.write("<script src='/assets/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--<![endif]-->
+
+  <!--[if IE]>
+  <script type="text/javascript">
+  window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+  </script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='/assets/admin/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--inline scripts related to this page-->
+
+  <script type="text/javascript">
+  	$(document).ready(function(){
+      $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+      });
+
+    });
+  </script>
+<% end %>

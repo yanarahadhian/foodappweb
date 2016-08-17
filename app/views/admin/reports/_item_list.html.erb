@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <% unless @item.empty? %>
+    <table id="" class="table table-bordered table-hover table-striped tablesorter">
+      <thead>
+        <tr id="header">
+          <th class="col-md-1">Name</th>
+          <th class="col-md-2">URL</th>
+          <th class="col-md-2">Comment</th>
+          <th class="col-md-2">Report Type</th>
+          <th class="col-md-2">Reason</th>
+          <th class="col-md-1">Status</th>
+          <th class="col-md-3">Action</th>            
+        </tr>
+      </thead>
+      <tbody>
+        <% @item.each do |i| %>
+          <%= render :partial => 'item', :locals => {:i => i} %>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+   <table id="example1" class="table table-striped table-hover table-responsive">
+      <thead>
+        <tr id="">
+          <td colspan="5">No Record!</td>
+        </tr>
+      </thead>
+    </table>
+  <% end %>
+</div>
+<%= paginate @item %>

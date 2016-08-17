@@ -1,0 +1,94 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>
+      Categories
+      <small>
+        <i class="fa fa-angle-double-right"></i>
+        list
+      </small>
+    </h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <%= link_to "Add new Item Category", new_admin_item_category_path %></br>
+      <!--PAGE CONTENT BEGINS-->
+      <% if notice %>
+        <%= notice %>
+      <% end%>
+      <% if flash[:error] %>
+        <%= flash[:error] %>
+      <% end%>
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Categories list</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <%= render :partial => 'category_list'%>
+          <%= paginate @category %>
+        </div><!-- /.box-body -->
+      </div>
+    </div><!--/.span-->
+  </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<%= content_for(:extra_js) do%>
+  <!--[if IE]>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <![endif]-->
+
+  <!--[if !IE]>-->
+
+  <script type="text/javascript">
+    window.jQuery || document.write("<script src='/assets/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--<![endif]-->
+
+  <!--[if IE]>
+  <script type="text/javascript">
+  window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+  </script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='/assets/admin/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--inline scripts related to this page-->
+
+  <script type="text/javascript">
+    $(function() {
+      var oTable1 = $('#sample-table-2').dataTable( {
+      "aoColumns": [
+          { "bSortable": false },
+          null, null,null, null, null,
+        { "bSortable": false }
+      ] } );
+      
+      
+      $('table th input:checkbox').on('click' , function(){
+        var that = this;
+        $(this).closest('table').find('tr > td:first-child input:checkbox')
+        .each(function(){
+          this.checked = that.checked;
+          $(this).closest('tr').toggleClass('selected');
+        });
+          
+      });
+
+      $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+      function tooltip_placement(context, source) {
+        var $source = $(source);
+        var $parent = $source.closest('table')
+        var off1 = $parent.offset();
+        var w1 = $parent.width();
+    
+        var off2 = $source.offset();
+        var w2 = $source.width();
+    
+        if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+        return 'left';
+      }
+    })
+  </script>
+<% end %>

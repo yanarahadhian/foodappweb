@@ -1,0 +1,10 @@
+<td><%= @item.name %></td>
+<td><%= link_to "#{WEB_URL}/#{@item.user.permalink}/#{@item.permalink}", "#{WEB_URL}/#{@item.user.permalink}/#{@item.permalink}", target: :blank %></td>
+<td><%= @item.reports.collect{|r| r.comment}.join(", ")%></td>
+<td><%= @item.reports.collect{|r| r.report_category.name }.uniq.join(", ") %></td>
+<td><%= text_area_tag "reason[]", @item.reports.last.reason %></td>
+<td><%= select_tag "item_status[]", options_for_select(["active", "suspend", "block"], @item.status), {:class => "form-control"} %></td>
+<td class="center">
+  <%= link_to 'Save', "javascript:void(0)", onclick: "update_report(this, #{@item.id})" %> |
+  <%= link_to 'Cancel', edit_item_admin_report_path(@item.id, cancel: true), remote: true %>
+</td>

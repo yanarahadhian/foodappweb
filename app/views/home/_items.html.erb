@@ -1,0 +1,12 @@
+<% @items.each_with_index do |ui, index| %>
+  <div class="item-prof">
+    <button type="button" class="btn btn-info btn-lg btn-modal" data-toggle="modal" data-target="#myModal-<%= index+1%>" >
+      <div class="item-detail">
+          <div class="item-name"><%= ui.name %> <br>$<%= ui.price %></div>
+          <div class="heart pull-left"><%= image_tag ('emoticon/heart.png')%><p><%= ui.like_count %></p></div>
+          <div class="comment pull-left"><p><%= ui.comments.count %></p><%= image_tag ('emoticon/chat.png') %></div>
+      </div>
+      <%= image_tag item_image_user(ui)%>
+    </button>                               
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<tr id="redeem<%=r.id%>">
+  <td><%= r.user.full_name %></td>
+  <td><%= r.user.bank_account %></td>
+  <td><%= r.user.bank_account_number %></td>
+  <td><%= r.amount %></td>
+  <td><%= r.status %></td>
+  <td><%= r.created_at.strftime("%b %d %Y") %></td>
+  <td class="center">
+    <%= link_to 'Edit', edit_admin_redeem_request_path(r.id), remote: true %>
+  </td>
+</tr>

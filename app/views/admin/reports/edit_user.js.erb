@@ -1,0 +1,6 @@
+<% cancel ||= params[:cancel] %>
+<% if (cancel) %>
+$("#user<%=@user.id%>").replaceWith("<%= j render :partial => 'user', :locals => {u: @user} %>")
+<% else %>
+$("#user<%=@user.id%>").html("<%= j render :partial => 'form_user' %>")
+<% end %>

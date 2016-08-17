@@ -1,0 +1,13 @@
+<tr id="item<%=i.id%>">
+  <td><%= i.name %></td>
+  <td><%= link_to "#{WEB_URL}/#{i.user.permalink}/#{i.permalink}", "#{WEB_URL}/#{i.user.permalink}/#{i.permalink}", target: :blank %></td>
+  <td><%= i.reports.collect{|r| r.comment}.join(", ")%></td>
+  <td><%= i.reports.collect{|r| r.report_category.name }.uniq.join(", ") %></td>
+  <td><%= i.reports.collect{|r| r.reason}.join() %></td>
+  <td><%= i.status %></td>
+  <td class="center">
+    <%= link_to "Send Mail", item_mail_admin_report_path(i.id) %> |
+    <%= link_to 'Edit', edit_item_admin_report_path(i.id), remote: true %> | 
+    <%= link_to 'Delete', delete_item_admin_report_path(i.id), data: {confirm: 'Are you sure delete Record item!?'},  method: :delete %>
+  </td>
+</tr>

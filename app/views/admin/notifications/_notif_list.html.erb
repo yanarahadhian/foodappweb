@@ -1,0 +1,37 @@
+<div class="table-responsive">
+  <table id="example1" class="table table-striped table-hover table-responsive">
+    <thead>
+      <tr>
+        <th class="col-md-3">Date</th>
+        <th class="col-md-3">Time</th>
+        <th class="col-md-3">Message</th>
+        <th class="col-md-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% unless @notifs.empty? %>
+      <% @notifs.each do |i| %>
+        <tr>
+          <td><%= i.notif_date.localtime.strftime("%d/%m/%Y") %></td>
+          <td><%= i.notif_date.localtime.strftime("%H:%M:%S") %></td>
+          <td><%= i.description %></td>
+          <td>
+          <%= link_to 'Resend',  edit_admin_notification_path(i), :remote => true  %> |
+          <%= link_to 'Delete', admin_notification_path(i.id), method: "DELETE", data: {confirm: 'Are you sure delete ?'}, :class => "button-notif" %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">No Record!</td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Create Notifications',  new_admin_notification_path, :remote => true, :class => "btn btn-info btn-lg"  %>
+</div>
+
+<div class="modal fade" id="myModal1" role="dialog">
+  <%= render :partial => 'form'%>
+</div>

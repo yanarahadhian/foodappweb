@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <% unless @redeem.empty? %>    
+    <table id="" class="table table-bordered table-hover table-striped tablesorter">
+      <thead>
+        <tr id="header">
+          <th class="col-md-2">User Name</th>
+          <th class="col-md-2">Bank Name</th>
+          <th class="col-md-2">Bank Account Number</th>
+          <th class="col-md-2">Amount</th>
+          <th class="col-md-2">Status</th>
+          <th class="col-md-2">Date</th>
+          <th class="col-md-2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @redeem.each do |r| %>
+          <%= render :partial => 'redeem', :locals => {:r => r} %>
+        <% end %>
+      </tbody>
+    </table>    
+  <% else %>
+   <table id="example1" class="table table-striped table-hover table-responsive">
+      <thead>
+        <tr id="">
+          <td colspan="5">No Record!</td>
+        </tr>
+      </thead>
+    </table>
+  <% end %>
+</div>
+<%= paginate @redeem %>
+
+<script type="text/javascript">
+
+</script>

@@ -1,0 +1,164 @@
+<% if @user.present? %>
+  <% javascript :defaults, 'endless_page' %>
+<!--  profile detail  -->
+    <!-- <section id="cover" style="background-image: url(<%= background_user(@user) %>)"> This is background in database-->
+  <section id="cover" style="background-image: url('assets/cover.png')">
+    <div class="container">
+      <div class="col-md-11 col-sm-11 col-xs-11 align">
+        <div class="col-xs-3 pull-left">
+          <div class="profpic">
+            <%= image_tag avatar_user(@user) %>
+           </div>
+           <% if user_signed_in? %>
+            <button type="submit" class="login">Follow</button>
+          <% end %>
+          <div class="emoticon">
+              <%= image_tag("emoticon/love.png")%><span class="badge"><%= @user.orders.get_count_rating("love")%></span>
+          </div>
+          <div class="emoticon">
+            <%= image_tag("emoticon/good.png")%><span class="badge"><%= @user.orders.get_count_rating("wide_smile")%></span>
+          </div>
+          <div class="emoticon">
+            <%= image_tag("emoticon/ok.png")%><span class="badge"><%= @user.orders.get_count_rating("smile")%></span>
+          </div>
+          <div class="emoticon">
+            <%= image_tag("emoticon/hmm.png")%><span class="badge"><%= @user.orders.get_count_rating("flat")%></span>
+          </div>
+          <div class="emoticon">
+            <%= image_tag("emoticon/never.png")%><span class="badge"><%= @user.orders.get_count_rating("nope")%></span>
+          </div>
+        </div>
+        <div class="col-xs-9 pull-right">
+          <div class="profname">
+            <%= link_to "#{@user.website_url}", "http://#{@user.website_url}", target: :blank, class: "pull-right website clearfix" %>
+            <div class="pull-right verified">
+              <p>Verified :</p>
+              <div>
+                <% if @user.verified_gplus == true %>
+                  <%= link_to "https://#{@user.google_id}", target: :blank do %> 
+                    <%= image_tag ("emoticon/google.png") %> 
+                  <% end %>
+                <% end %>
+                <% if @user.verified_fb == true %>
+                  <%= link_to "https://#{@user.facebook_id}", target: :blank do %> 
+                    <%= image_tag ("emoticon/face.png") %> 
+                  <% end %>
+                <% end %>                             
+                <%#= link_to root_path do %> 
+                  <%#=  image_tag ("emoticon/yahoo.png") %> 
+                <%# end %>
+              </div>
+            </div>
+            <h3><%= @user.full_name %></h3>
+            <h5><%= @user.city.capitalize rescue nil %>, <%= @user.country.capitalize rescue nil %></h5>
+            <h6>Joined, <%= @user.created_at.strftime("%b %d %Y") %></h6>
+            <p><%= @user.about_me %></p>
+            <div class="proftab"><%= @user.items.count rescue 0 %> Listing</div>   
+            <div class="proftab"><%= @user.followers.count rescue 0 %> Followers</div>
+            <div class="proftab"><%= @user.following_user_count rescue 0 %> Following</div>
+            <%#= link_to "Promote", root_path, class: "proftab" %>
+            <div class="liked">
+              <% if user_signed_in? %>
+                <%= link_to root_path, class: "btn like" do %>
+                  <%= image_tag ('emoticon/loveunfill.png')%>
+                <% end %>
+              <% end %>                          
+            </div>
+            <div class="liked">
+              <% if user_signed_in? %>
+                <%= link_to root_path, class: "btn-circle" do %>
+                  <%= image_tag ('emoticon/circle.png')%>
+                <% end %>
+              <% end %>                          
+            </div>                 
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="image">
+    <div class="container ">
+      <div class="col-xs-12 section-item ">
+        <div id='items'>
+          <%= render :partial => 'items' %>
+        </div>
+        <%= paginate @items %>
+        <div class="see-more">
+            <a href="#"><%= image_tag "emoticon/fork_knife.png"%>
+        </div>
+      </div>
+    </div>
+      <!-- Modal -->
+    <% @user.items.each_with_index do |ui, index| %>
+      <div class="modal fade" id="myModal-<%= index+1 %>" role="dialog">
+        <div class="modal-dialog">    
+          <!-- Modal content-->      
+            <div class="modal-content">        
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="profpic">
+                  <%= image_tag avatar_user(@user) %>
+                </div>
+                <div class="modal-title"><h4><strong><%= ui.name%></strong> <br> $ <%= ui.price %></h4></div>
+              </div>
+              <div class="modal-body">
+                <%= image_tag item_image_user(ui)%>
+              </div>
+              <div class="desc">
+              <p><%= ui.description %></p>
+                  
+              </div>
+              <div class="modal-comment">
+                <span class="glyphicon glyphicon-heart modal-heart"><p><%= ui.like_count %> likes</p></span>
+                <% ui.comments.each do |comments| %>
+                  <div class="modal-comment-name">
+                    <a href=""><strong><%= comments.user.full_name %></strong></a>
+                    <p><%= comments.body %></p>
+                  </div>
+                  </br>
+                <% end %>            
+              </div>
+              <% if user_signed_in? %>
+                <div class="modal-footer">
+                <textarea class="text-comment" placeholder="Comment"> Comment</textarea>
+                  <button type="button" class="btn btn-default">enter comment</button>
+                </div>
+              <% end %>
+            </div>      
+        </div>
+      </div>
+    <% end %>
+    <!-- end of modal -->
+  </section>
+<% end %>
+    <!-- Custom Theme JavaScript -->
+    <script>
+    // Closes the sidebar menu
+    // $("#menu-close").click(function(e) {
+    //     e.preventDefault();
+    //     $("#sidebar-wrapper").toggleClass("active");
+    // });
+
+    // Opens the sidebar menu
+    // $("#menu-toggle").click(function(e) {
+    //     e.preventDefault();
+    //     $("#sidebar-wrapper").toggleClass("active");
+    // });
+
+    // Scrolls to the selected menu item on the page
+    // $(function() {
+    //     $('a[href*=#]:not([href=#])').click(function() {
+    //         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+    //             var target = $(this.hash);
+    //             target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+    //             if (target.length) {
+    //                 $('html,body').animate({
+    //                     scrollTop: target.offset().top
+    //                 }, 1000);
+    //                 return false;
+    //             }
+    //         }
+    //     });
+    // });
+    </script>

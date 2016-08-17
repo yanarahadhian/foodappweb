@@ -1,0 +1,29 @@
+
+<div class="modal-dialog-notif">      
+  <!-- Modal content-->
+  <%= form_for [:admin, @notif] do |f| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notification Mail</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row-fluid">
+          <div class="span8">
+            <div class="control-group">
+              <div class="controls">
+                <%#= text_field_tang 'datenotif' nil, class: 'form-control', 'data-behaviour' => 'datepicker' %>
+                <%= f.text_field :notif_date, :class => 'datepicker' %>
+              </div>              
+            </div>
+          </div>
+        </div>    
+        <%= f.text_area :description %>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="submit" class="btn btn-info btn-lg" data-dismiss="modal">Send Mail</button> -->
+        <%= f.submit 'Send Notif' %>
+      </div>
+    </div> 
+  <% end %>     
+</div>

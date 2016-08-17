@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <table id="example1" class="table table-striped table-hover table-responsive">
+    <thead>
+      <tr>
+        <th class="col-md-3">Category Name</th>
+        <th class="col-md-3"># of Items</th>
+        <th class="col-md-3">Create at</th>
+        <th class="col-md-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% unless @category.empty? %>
+      <% @category.each do |c| %>
+        <tr>
+          <td><%= c.name %></td>
+          <td><%= c.items.count %></td>
+          <td><%= c.created_at.strftime("%b %d %Y") %></td>
+          <td>
+            <%= link_to 'Edit', edit_admin_item_category_path(c.id), :class => "btn fa fa-pencil" %>
+            <%= link_to 'Delete', admin_item_category_path(c.id), method: "DELETE", data: {confirm: 'Delete '+c.name+'? '}, :class => "btn btn-xs btn-danger fa fa-trash" %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">No Record!</td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

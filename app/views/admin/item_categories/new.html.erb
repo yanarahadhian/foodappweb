@@ -1,0 +1,71 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>
+      New Category
+    </h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+
+      <div id="user-profile-3" class="user-profile row-fluid">
+        <div class="offset1 span10">
+          <%= form_for [:admin, @category], :html => {:multipart => true, :class => "form-horizontal", :role => "form"} do |f| %>
+            <div class="tabbable">
+              <ul class="nav nav-tabs padding-16">
+                <li class="active">
+                  <a data-toggle="tab" href="#edit-basic">
+                    <i class="green fa fa-edit bigger-125"></i>
+                    Basic Info
+                  </a>
+                </li>
+              </ul>
+
+      <div class="tab-content profile-edit-tab-content">
+          <div id="edit-basic" class="tab-pane in active">
+            <h4 class="header blue bolder smaller">General</h4>
+
+            <div class="row-fluid">
+              <div class="span8">
+                <div class="control-group">
+                <%= f.label :name, "Name:", class: "control-label" %>
+
+                <div class="controls">
+                <%= f.text_field :name, {:class => "form-control", :placeholder => @category.name, :value => @category.name }%>
+                </div>
+                <%= @category.errors[:name].first unless @category.errors[:name].blank? %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+            <div class="form-actions">
+              <%= f.submit "Save", class: "btn btn-info" %>
+            </div>
+          <% end %>
+        </div><!--/span-->
+      </div><!--/user-profile-->
+
+      <!--PAGE CONTENT ENDS-->
+    </div><!--/.span-->
+  </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<%= content_for(:extra_js) do %>
+  <!--basic scripts-->
+
+
+  <!--[if !IE]>-->
+
+  <script type="text/javascript">
+    window.jQuery || document.write("<script src='/assets/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--<![endif]-->
+
+
+  <script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='/assets/admin/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+<% end %>

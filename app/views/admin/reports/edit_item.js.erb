@@ -1,0 +1,6 @@
+<% cancel ||= params[:cancel] %>
+<% if (cancel) %>
+$("#item<%=@item.id%>").replaceWith("<%= j render :partial => 'item', :locals => {i: @item} %>")
+<% else %>
+$("#item<%=@item.id%>").html("<%= j render :partial => 'form_item' %>")
+<% end %>

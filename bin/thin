@@ -1,0 +1,2 @@
+kill -9 $(lsof -i:3258) &> /dev/null
+rvm use ruby-2.1.5@foodappweb do bundle exec thin start -p 3258 -d -e staging

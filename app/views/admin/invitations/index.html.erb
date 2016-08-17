@@ -1,0 +1,186 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>
+      Invitations
+      <small>
+        <i class="fa fa-angle-double-right"></i>
+        list
+      </small>
+    </h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Invitations list | Total invited users: <%= @invites.count %></h3>
+        </div><!-- /.box-header -->
+        <div class=" box-body">
+          <%= form_for "Invitation", :url => filter_invite_admin_invitations_path, :id => "", :remote => true do %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span class="filter-left">Filters</span>
+                <span class="filter-right">View Page</span>
+              </div>
+              <div class="panel-body">
+                <div class="filter-left">
+                  <div class="col-lg-2">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>Status</label> -->
+                     <%= select_tag(:status, options_for_select([ ["Eater", "Eater"], ["Feeder", "Feeder"] ] ),{:class => "form-control status_filter", :prompt => "All"})  %></td>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>First Name</label> -->
+                      <%= text_field_tag "first_name", "", :class => "form-control first_name_filter", :placeholder => "First Name" %>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>Email</label> -->
+                      <%= text_field_tag "email", "", :class => "form-control email_filter", :placeholder => "Email" %>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>Username</label> -->
+                      <%= text_field_tag "username", "", :class => "form-control username_filter", :placeholder => "Username" %>
+                      <%= hidden_field_tag "sort_filter", @state, :class => "form-control sort_filter" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter-right">
+                  <div class="col-lg-2">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>Status</label> -->
+                     <%= select_tag(:limit, options_for_select([ ["All", "All"], ["5", "5"], ["10", "10"], ["25", "25"], ["50", "50"], ["100", "100"]], :selected=> "25"),{:selected => "25", :class => "form-control limit_filter"})  %></td>
+                    </div>
+                  </div>
+                  <div class="col-lg-1">
+                    <%= submit_tag "Apply",:class => "form-control btn btn-small"%>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="box-body filter-content">
+          <%= render :partial => 'invite_list'%>
+        </div><!-- /.box-body -->
+      </div>
+    </div><!--/.span-->
+  </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<%= content_for(:extra_js) do %>
+  <!--[if IE]>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <![endif]-->
+
+  <!--[if !IE]>-->
+
+  <script type="text/javascript">
+    window.jQuery || document.write("<script src='/assets/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--<![endif]-->
+
+  <!--[if IE]>
+  <script type="text/javascript">
+  window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+  </script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='/assets/admin/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--inline scripts related to this page-->
+
+  <script type="text/javascript">
+    $(document).on("click", "#multipleDestroy", function(){
+      var checkedCount = $("tbody input[type='checkbox']:checked").length
+      if( checkedCount == 0){
+        alert("You must at least check 1 invitation")
+      } else {
+        c = confirm("Are you sure want to delete all the selected invitations from the database?")
+        if(c){
+          $("#multiDestroyForm").submit()
+        }
+      }
+    })
+    $(document).on("change", "#check_all", function(){
+      $("tbody input[type='checkbox']").prop("checked", $(this).is(":checked"))
+    })
+
+    $(document).on("change", "tbody input[type='checkbox']", function(){
+      var inputCount = $("tbody input[type='checkbox']").length
+      var checkedCount = $("tbody input[type='checkbox']:checked").length
+
+      $("#check_all").prop("checked", inputCount == checkedCount)
+    })
+
+    $(document).ready(function(){
+      $('.wysihtml5').each(function(i, elem) {
+        $(elem).wysihtml5();
+      });
+      $('body').on("click", ".pagination a", function(e){
+        var state = $(".sort_filter").val();
+        var status = $(".status_filter").val();
+        var first_name = $(".first_name_filter").val();
+        var email = $(".email_filter").val();
+        var username = $(".username_filter").val();
+        var limit = $(".limit_filter").val();
+
+        $.get("/admin/invitations/option_invite?"+this.href.split("?")[1]+"&state="+ state +"&status="+ status +"&first_name="+ first_name +"&email="+ email +"&username="+ username +"&limit="+ limit, null, null, "script");
+        return false;
+      });
+    })
+
+    $(function() {
+      var oTable1 = $('#sample-table-2').dataTable( {
+      "aoColumns": [
+          { "bSortable": false },
+          null, null,null, null, null,
+        { "bSortable": false }
+      ] } );
+      
+      
+      $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+      function tooltip_placement(context, source) {
+        var $source = $(source);
+        var $parent = $source.closest('table')
+        var off1 = $parent.offset();
+        var w1 = $parent.width();
+    
+        var off2 = $source.offset();
+        var w2 = $source.width();
+    
+        if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+        return 'left';
+      }
+    })
+
+    // $(function() {
+    //   $('textarea#eg-textarea').editable({
+    //     inlineMode: false
+    //   })
+    // });
+
+    $( "#emailBtn" ).click(function() {
+      var length_checked = $('.check-invite').find('input:checked').length
+      // var arrayChecked = $('.check-invite').find('input:checked').val;
+      if (length_checked > 0) {
+        var val = [];
+        $(':checkbox:checked').each(function(i){
+          val.push($(this).val())
+        });
+        val.pop()
+        $("#tags_list").val(val.join(","))        
+      }
+    });
+
+  </script>
+<% end %>

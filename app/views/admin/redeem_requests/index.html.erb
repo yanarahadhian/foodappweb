@@ -1,0 +1,98 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>
+      Redeem Requests
+      <small>
+        <i class="fa fa-angle-double-right"></i>
+        list
+      </small>
+    </h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Redeem Requests list</h3>
+        </div><!-- /.box-header -->
+        <div class=" box-body">
+          <%= form_for "Invitation", :url => filter_redeem_admin_redeem_requests_path, :id => "", :remote => true do %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span class="filter-left">Filters</span>
+                <span class="filter-right">View Page</span>
+              </div>
+              <div class="panel-body">
+                <div class="filter-left">
+                  <div class="col-lg-2">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>Status</label> -->
+                     <%= select_tag(:status, options_for_select([ ["pending", 0], ["paid", 1] ] ),{:class => "form-control status_filter", :prompt => "All"})  %>
+                     <%= hidden_field_tag "sort_filter", @state, :class => "form-control sort_filter" %>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter-right">
+                  <div class="col-lg-2">
+                    <div class="form-group input-group" style="margin:0">
+                      <!-- <label>Status</label> -->
+                     <%= select_tag(:limit, options_for_select([ ["All", "All"], ["5", "5"], ["10", "10"], ["25", "25"], ["50", "50"], ["100", "100"]], :selected=> "25"),{:selected => "25", :class => "form-control limit_filter"})  %></td>
+                    </div>
+                  </div>
+                  <div class="col-lg-1">
+                    <%= submit_tag "Apply",:class => "form-control btn btn-small"%>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="box-body filter-content">
+          <%= render :partial => 'redeem_list'%>
+        </div><!-- /.box-body -->
+      </div>
+    </div><!--/.span-->
+  </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<%= content_for(:extra_js) do %>
+  <!--[if IE]>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <![endif]-->
+
+  <!--[if !IE]>-->
+
+  <script type="text/javascript">
+    window.jQuery || document.write("<script src='/assets/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    function update_redeem(ths, redeem){
+      var new_this = ths;
+      var redeem_status = $($(new_this).parents("tr").children()[4]).find("select").val();
+      
+      $.ajax({
+        url: "/admin/redeem_requests/"+redeem,
+        data: {status: redeem_status},
+        type: "put",
+        beforeSend: function(req){},
+        success: function(req){
+          //$("#user"+user).
+        }
+      })
+    }
+  </script>
+
+  <!--<![endif]-->
+
+  <!--[if IE]>
+  <script type="text/javascript">
+  window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+  </script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='/assets/admin/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+  </script>
+
+  <!--inline scripts related to this page-->
+<% end %>

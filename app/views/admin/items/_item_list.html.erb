@@ -1,0 +1,62 @@
+<div class="table-responsive">
+  <% unless @items.blank? %>
+    <% @items.each_with_index do |i, index| %>
+    	<div class="span4 widget-container-span">
+    		<div class="widget-box">
+    			<div class="widget-header">
+    				<h5><%= link_to i.name, admin_item_path(i.id)%></h5>
+    			</div>
+
+    			<div class="widget-body">
+    				<div class="widget-main">
+              <figure class="center">
+              	<div id="slide_<%= index %>" class="slideshow">
+              	<% if i.images.present? %>
+                	<% i.images.each do |image| %>
+    							  <div>
+    									<%= image_tag image.storage.thumb.url%>
+    							  </div>
+    							<% end %>
+    						<% else %>
+    							<%= image_tag 'default-food.jpg' %>
+    						<% end %>
+    						</div>                    	
+              </figure>
+              <div class="hr hr32 hr-dotted"></div>
+    					<p>
+    						Price: $ <%= i.price %>
+    					</p>
+
+              <p class="desc-item">
+              <% if i.description.present? %>
+                <%= i.description.truncate(300) %>
+              <% else %>
+              	<%= i.description %>
+              <% end %>
+              </p>
+    				</div>
+    			
+            <div class="widget-toolbox padding-8 clearfix">
+              <div class="pull-left">
+                By
+                <% @user_item = User.find_by_id(i.user_id) %>
+                <%= link_to @user_item.full_name, admin_user_path(@user_item.id) %>
+              </div>
+
+              <div class="action-btn pull-right">
+                <%= link_to "Edit", edit_admin_item_path(i.id)%>
+                 |
+                <%= button_to admin_item_path(i.id), data: {confirm: 'Delete '+i.name+'? '}, method: :delete, :class => "del-button" do %>
+                	Delete
+                <% end %>
+              </div>
+            </div>
+          </div>
+    		</div>
+    	</div>
+    <% end %>
+  <% else %>
+    No Record!
+  <% end %>
+</div>
+<%= paginate @items %>

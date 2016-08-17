@@ -1,0 +1,185 @@
+<div class="page-content">
+	<div class="page-header position-relative">
+		<h1>
+			Edit User
+			<small>
+				<i class="fa fa-double-angle-right"></i>
+				<%= @user.full_name %>
+			</small>
+		</h1>
+	</div><!--/.page-header-->
+
+	<div class="row-fluid">
+		<div class="span12">
+			<!--PAGE CONTENT BEGINS-->
+
+			<div id="user-profile-3" class="user-profile row-fluid">
+				<div class="offset1 span10">
+					<%= form_for @user, url: admin_user_path(@user.id), :html => {:method => "put", :multipart => true, :class => "form-horizontal", :role => "form"} do |f| %>
+						<div class="tabbable">
+							<ul class="nav nav-tabs padding-16">
+								<li class="active">
+									<a data-toggle="tab" href="#edit-basic">
+										<i class="green fa fa-edit bigger-125"></i>
+										Basic Info
+									</a>
+								</li>
+							</ul>
+
+
+			<div class="tab-content profile-edit-tab-content">
+				  <div id="edit-basic" class="tab-pane in active">
+					<h4 class="header blue bolder smaller">General</h4>
+
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+							  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+							  	<%= image_tag avatar_user(@user) %>
+							  	</div>
+							  <div>
+								  <span class="btn btn-default btn-file">
+										<span class="fileinput-new">Select Avatar</span>
+										<span class="fileinput-exists">Change</span>
+										<%= file_field_tag "avatar", type: :file, multiple: false, accept: "image/*" %>
+									</span>
+									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+							  </div>
+							</div>
+							<!-- <div class="fileinput fileinput-new" data-provides="fileinput">
+							  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+							  	<%#= image_tag background_user(@user) %>
+							  	</div>
+							  <div>
+								  <span class="btn btn-default btn-file">
+										<span class="fileinput-new">Select Background</span>
+										<span class="fileinput-exists">Change</span>
+										<%#= file_field_tag "background", type: :file, multiple: false %>
+									</span>
+									<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+							  </div>
+							</div> -->
+						</div>
+
+            <!-- <%# if @user.errors[:avatar].any? %>
+              <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+              <div class="alert alert-danger" style="padding:1%; padding-left:3%; margin:0;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <%#= @user.errors[:avatar].first unless @user.errors[:avatar].blank? %>
+              </div>
+            </div>
+            <%# end %> -->
+
+						<div class="vspace"></div>
+
+						<div class="span8">
+						  <div class="control-group">
+							<%= f.label :full_name, "Full Name:", class: "control-label" %>
+							<div class="controls">
+							<%= f.text_field :full_name, {:class => "form-control", :placeholder => @user.full_name, :value => @user.full_name }%>
+							</div>
+							<%= @user.errors[:full_name].first unless @user.errors[:full_name].blank? %>
+						  </div>
+						</div>
+
+						<div class="span8">
+						  <div class="control-group">
+							<%= f.label :website_url, "Website:", class: "control-label" %>
+							<div class="controls">
+							<%= f.text_field :website_url, {:class => "form-control", :placeholder => @user.website_url, :value => @user.website_url }%>
+							</div>
+							<%= @user.errors[:website_url].first unless @user.errors[:website_url].blank? %>
+						  </div>
+						</div>
+
+						<div class="span8">
+						  <div class="control-group">
+							<%= f.label :about_me, "About Me:", class: "control-label" %>
+							<div class="controls">
+							<%= f.text_area :about_me, {:class => "form-control", :style => "height: 100px;", :placeholder => @user.about_me, :value => @user.about_me }%>
+							</div>
+							<%= @user.errors[:about_me].first unless @user.errors[:about_me].blank? %>
+						  </div>
+						</div>
+
+						<div class="span8 pull-right">
+						  <div class="control-group">
+							<%= f.label :phone, "Phone:", class: "control-label" %>
+							<div class="controls">
+							<%= f.text_field :phone, {:class => "form-control", :placeholder => @user.phone, :value => @user.phone }%>
+							</div>
+							<%= @user.errors[:phone].first unless @user.errors[:phone].blank? %>
+						  </div>
+						</div>
+
+					</div>
+
+					<div class="space"></div>
+					<h4 class="header blue bolder smaller">Contact</h4>
+					<div class="control-group">
+					  <%= f.label :email, "email:", class: "control-label" %>
+
+					  <div class="controls">
+					  <%= f.text_field :email, {:class => "form-control", :placeholder => @user.email, :value => @user.email }%>
+					  </div>
+					  <%= @user.errors[:email].first unless @user.errors[:email].blank? %>
+					</div>
+					<div class="control-group">
+					  <%= f.label :facebook_id, "Facebook ID:", class: "control-label" %>
+
+					  <div class="controls">
+					  <%= f.text_field :facebook_id, {:class => "form-control", :placeholder => @user.facebook_id, :value => @user.facebook_id }%>
+					  </div>
+					  <%= @user.errors[:facebook_id].first unless @user.errors[:facebook_id].blank? %>
+					</div>
+
+					<div class="control-group">
+					  <%= f.label :google_id, "Google ID:", class: "control-label" %>
+
+					  <div class="controls">
+					  <%= f.text_field :google_id, {:class => "form-control", :placeholder => @user.google_id, :value => @user.google_id }%>
+					  </div>
+					  <%= @user.errors[:google_id].first unless @user.errors[:google_id].blank? %>
+					</div>
+				  </div>
+				</div>
+
+						<div class="form-actions">
+		 					<%= f.submit "edit", class: "btn btn-info" %>
+						</div>
+					<% end %>
+				</div><!--/span-->
+			</div><!--/user-profile-->
+
+			<!--PAGE CONTENT ENDS-->
+		</div><!--/.span-->
+	</div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<%= content_for(:extra_js) do %>
+	<!--basic scripts-->
+
+	<!--[if IE]>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<![endif]-->
+
+	<!--[if !IE]>-->
+
+	<script type="text/javascript">
+		window.jQuery || document.write("<script src='/assets/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+	</script>
+
+	<!--<![endif]-->
+
+	<!--[if IE]>
+	<script type="text/javascript">
+	window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+	</script>
+	<![endif]-->
+
+	<script type="text/javascript">
+		if("ontouchend" in document) document.write("<script src='/assets/admin/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+	</script>
+
+	<!--inline scripts related to this page-->
+<% end %>
+

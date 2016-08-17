@@ -1,0 +1,10 @@
+<td><%= @user.full_name %></td>
+<td><%= link_to "#{WEB_URL}/#{@user.permalink}", "#{WEB_URL}/#{@user.permalink}", target: :blank %></td>
+<td><%= @user.reports.collect{|r| r.comment}.join(", ")%></td>
+<td><%= @user.reports.collect{|r| r.report_category.name }.uniq.join(", ") %></td>
+<td><%= text_area_tag "reason[]", @user.reports.last.reason %></td>
+<td><%= select_tag "user_status[]", options_for_select(["active", "suspend", "block"], @user.status), {:class => "form-control"} %></td>
+<td class="center">
+  <%= link_to 'Save', "javascript:void(0)", onclick: "update_report(this, #{@user.id})" %> |
+  <%= link_to 'Cancel', edit_user_admin_report_path(@user.id, cancel: true), remote: true %>
+</td>

@@ -1,0 +1,50 @@
+<div class="table-responsive">
+  <table id="example1" class="table table-striped table-hover table-responsive">
+    <thead>
+      <tr>
+        <th class="col-md-3">Full Name</th>
+        <th class="col-md-3">Email</th>
+        <th class="col-md-3">Username</th>
+        <th class="col-md-5">About Me</th>
+        <th class="col-md-3">Followers</th>
+        <th class="col-md-3">Following</th>
+        <th class="col-md-3">Listing</th>
+        <th class="col-md-3">Facebook ID</th>
+        <th class="col-md-3">Google ID</th>
+        <th class="col-md-3">Created Date</th>
+        <th class="col-md-3">City</th>
+        <th class="col-md-3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% unless @users.blank? %>
+        <% @users.each do |u| %>
+          <tr>
+            <td><%= link_to u.full_name, admin_user_path(u.id) %></td>
+            <td><%= u.email %></td>
+            <td><%= u.username %></td>
+            <td><%= u.about_me %></td>
+            <td><%= u.followers.count rescue 0 %></td>
+            <td><%= u.following_user_count rescue 0 %></td>
+            <td><%= u.items.count rescue 0 %></td>
+            <td><%= u.facebook_id %></td>
+            <td><%= u.google_id %></td>
+            <td><%= Date.strptime("#{u.created_at}","%Y-%m-%d %H:%M:%S %Z").strftime("%A, %d %B %Y") %></td>
+            <td><%= u.city %></td>
+            <td>
+              <%= link_to 'View', admin_user_path(u.id), :class => "btn fa fa-eye" %>
+              <%= link_to 'Edit', edit_admin_user_path(u.id), :class => "btn fa fa-pencil" %>
+              <%= button_to admin_user_path(u.id), data: { confirm: "Are you sure delete #{u.full_name}?" }, :class => "btn btn-xs btn-danger fa fa-trash", method: :delete do %>
+                Delete
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="12">No Record!</td>
+        </tr>
+      <% end %>
+  </table>
+  <%= paginate @users, remote: :true %>
+</div>

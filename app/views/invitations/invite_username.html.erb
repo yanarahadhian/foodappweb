@@ -1,0 +1,33 @@
+<div class="warp">
+  <div class="container">
+    <div class="image-share col-md-6 col-sm-12 col-xs-12 margin-top-md margin-bot-min">
+      <%= image_tag "champ.png" %>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12 pull-right margin-top-lg margin-bot-md">
+      <%= form_for @invitation, :url => invitation_username_path(@invitation), method: :put, :remote => true, :html => {:id => "my_username"} do |f| %>
+        <h3>Thanks for the share!</h3>
+        <p>Reserve your favourite username : </p>
+        <div class="username-link">
+          <%= WEB_URL %>/<%= f.text_field :username, :id => 'invitation_username', class: 'form-control pull-left', placeholder: 'Your Username', class: 'textbox textbox-username' %>
+          <span class="red show_existed_username_message">
+            <%= @invitation.errors.messages[:username][0] if @invitation.errors.any? %>
+          </span>
+        </div>
+        <div class="clear"></div>
+        <%= f.submit 'MINE !', class: "btn-sm btn-reserve", :id => 'btnMine' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<%= content_for(:extra_js) do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      <% if @notif.blank? %>
+        valid_user("<%= flash[:notice] %>")
+      <% else %>
+        valid_user("<%= flash[:notice] %>", "<%= @notif %>")
+      <% end %>
+    })
+  </script>
+<% end %>

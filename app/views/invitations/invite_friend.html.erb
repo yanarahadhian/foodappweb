@@ -1,0 +1,177 @@
+<div class="warp">
+  <div class="container">
+    <div class="image-share col-md-6 col-sm-12 col-xs-12 margin-top-md margin-bot-min">
+	    <%= image_tag "sharing.png" %>
+	  </div>
+
+    <div class="col-md-6 col-sm-12 col-xs-12 pull-right margin-top-lg margin-bot-md">
+      <h3>Thank you for signing up for TuckerBox!</h3>
+      <p>We believe that great satisfaction comes from sharing with others. <strong style="font-size: 23px;">Invite friends by clicking the social media icons below to reserve your username</strong></p>
+      <!-- <div class="unix-link"><%#= WEB_URL+'?ref_id='+@invitation.ref_id %></div> -->
+      <div class="share-icon">
+        <p class="text-center bold red"> Share now via</p>
+        <%= link_to '#', data: { toggle: 'modal', target: '#myModalInvite'} do %>
+          <i class="fa fa-envelope icon-gap"></i>
+        <% end %>          
+        <%= link_to '#', :onclick => 'share_button()' do %>
+          <i class="fa fa-facebook-square icon-gap"></i>
+        <% end %>
+        <!-- <a href="https://twitter.com/intent/tweet?text=I've just reserved my username on @tuckerboxapp. Super stoked and ready to discover some good eats! Come join me <%#= WEB_URL + '%3Fref_id%3D' + @invitation.ref_id %>" id="shareTwitter">
+          <i class="fa fa-twitter-square icon-gap"></i>
+        </a> -->
+      </div>
+    </div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="modal fade" id="myModalInvite" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <%= form_for "Invitation", :url => mail_invite_invitations_path, :id => "my_mail" do %>
+      <%= hidden_field_tag "invitation", @invitation.id %>
+       <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Share Your Unique Link By Mail</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row-fluid">
+            <div class="span8">
+              <div class="control-group">
+                <div class="controls">
+                  <%= text_field_tag :mail_to, nil, class: 'form-control', placeholder: 'email@explain.com', style: 'margin-bottom: 25px;' %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="pull-left">Notes :</label>
+          <%= text_area_tag :notes, "", class: 'form-control', rows: 10 %>
+        </div>
+        <div class="modal-footer">
+          <%= submit_tag 'Send Mail' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= content_for(:extra_js) do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      valid_user("<%= flash[:notice] %>")
+    });
+    // var openDialog = function(url, closeCallback) {
+    //   var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    //   var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    //   w = 500
+    //   h = 300
+    //   width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    //   height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    //   var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    //   var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    //   var win = window.open(url, "TuckerBox Twitter Share", 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+    //   var interval = window.setInterval(function() {
+    //       try {
+    //           if (win == null || win.closed) {
+    //               window.clearInterval(interval);
+    //               closeCallback(win);
+    //           }
+    //       }
+    //       catch (e) {
+    //       }
+    //   }, 1000);
+    //   return win;
+    // };
+
+    // $(document).on("click", "#shareTwitter", function(){
+
+    //   openDialog($(this).attr("href"), function(){
+    //     $.ajax({
+    //       url: '/invitations/invite_username',
+    //       data: {id: <%= @invitation.id %>},
+    //       dataType: 'html',
+    //       success: function(data) {
+    //          $('body').html(data);
+    //          valid_user();
+    //       }
+    //     });
+    //   })
+    //   return false
+    // })
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : "<%= FB_APP_ID %>",
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function share_button() {
+      FB.ui({
+        method: 'feed',
+        link: "<%= WEB_URL + '?ref_id=' + @invitation.ref_id %>",
+        name: 'TuckerBox',
+        description: "Buy, Sell & Discover home-cooked goodness and fresh produce from your neighbourhood.",
+        /*"I've just reserved my username on @tuckerboxapp. Super stoked & ready to discover some good eats! Come join me <%= WEB_URL + '?ref_id=' + @invitation.ref_id %>",*/
+        picture: "<%= FB_FEED_PICTURE_URL %>"
+      },function(response) {
+        if (response && !response.error_message) {
+          $.ajax({
+    	      url: '/invitations/invite_username',
+    	      data: {id: <%= @invitation.id %>},
+    	      dataType: 'html',
+    	      success: function(data) {
+    	         $('body').html(data);
+               valid_user();
+    	      }
+    			});
+        }
+      });
+    };
+  // $(function(){
+  //   $.ajax({
+  //     url: "/invitations/invited_username",
+  //     data_type: "script",
+  //     type: "GET"
+  //   }).done(function(user_names) {
+  //     var i = 0;
+  //     setTimeout(function(){
+  //       $.notify("Someone has recently reserved: " + user_names[0], "info" );
+  //       i += 1;
+  //       rand = Math.round(Math.random() * (30000 - 10000)) + 10000;
+  //       setInterval(function() {
+  //         var user_name = user_names[i++];
+  //         $.notify("Someone has recently reserved: " + user_name, "info" );
+  //         if(i >= user_names.length) i = 0;
+  //       }, rand);
+  //     });
+  //   });
+  // });
+  </script>
+  <script>(function() {
+      var _fbq = window._fbq || (window._fbq = []);
+      if (!_fbq.loaded) {
+        var fbds = document.createElement('script');
+        fbds.async = true;
+        fbds.src = '//connect.facebook.net/en_US/fbds.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(fbds, s);
+        _fbq.loaded = true;
+      }
+    })();
+    window._fbq = window._fbq || [];
+    window._fbq.push(['track', '6040936895547', {'value':'0.00','currency':'AUD'}]);
+    </script>
+    <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6040936895547&amp;cd[value]=0.00&amp;cd[currency]=AUD&amp;noscript=1" /></noscript>
+<% end %>

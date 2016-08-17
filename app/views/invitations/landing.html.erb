@@ -1,0 +1,249 @@
+<section id="backgroundImage">
+  <div class="container">
+    <div class="register_content">
+      <div class="phone pull-left col-md-6">
+        <div class="child">
+          <div id="myCarousel" class="carousel slide picture" data-ride="carousel">
+            <!-- Indicators -->
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <%= image_tag ('phone1.jpg') %>
+              </div>
+
+              <div class="item">
+                <%= image_tag ('phone2.jpg') %>
+              </div>
+
+              <div class="item">
+                <%= image_tag ('phone3.jpg') %>
+              </div>
+
+              <div class="item">
+                <%= image_tag ('phone4.jpg') %>
+              </div>
+
+              <div class="item">
+                <%= image_tag ('phone5.jpg') %>
+              </div>
+            </div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+              <span class="glyphicon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+              <span class="glyphicon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rightSide">
+        <%# if flash[:notice] %>
+          <!-- <div class="notice"><h1><%#= flash[:notice] %></h1></div> -->
+        <%# end %>
+        <div class="register">
+          <h3>Buy, Sell & Discover <br><span style="font-size: 22px">home-cooked goodness and fresh produce from your neighbourhood.</span></h3>
+          We’re gearing up to hit Malaysia <%#= visitor_country %> soon! Leave your details to get <span style="font-weight:700;font-size: 24px;">10% off</span> all orders for 30 days and reserve your username. Follow us for delightfully irregular updates via Facebook, Twitter and Instagram.
+          <%= form_for @invitation, :html => {:class => "regForm", :role => "form"} do |f| %>
+            <%#= f.hidden_field :country, :value => visitor_country %>
+            <%= f.hidden_field :ref_id, :value => params[:ref_id] %>
+            <div class="radio-inline add-margin">
+              <label><%= f.radio_button :status, 'Eater', :id => "eater", :checked => true %>I'm an Eater</label>
+              <label><%= f.radio_button :status, 'Feeder', :id => "feeder" %>I'm a Feeder</label>
+            </div>
+            <div class="form-group">
+                <%= f.text_field :first_name, {:placeholder => "Name", :class => "form-username form-control", :required => "required"} %>
+                <%= @invitation.errors[:first_name].first unless @invitation.errors[:first_name].blank? %>
+            </div>
+
+            <div class="form-group" style="display:none;">
+                <%#= f.text_field :last_name, {:placeholder => "Last Name",:class => "form-username form-control", :required => "required"} %>
+                <%#= @invitation.errors[:last_name].first unless @invitation.errors[:last_name].blank? %>
+            </div>
+
+            <div class="form-group">
+                <%= f.text_field :email, {:placeholder => "Email",:class => "form-username form-control", :required => "required"} %>
+            </div>
+            <div class="border-top">
+                <%= button_tag "I want to tuck in", class: "btn reg", :id => "invitebtn", style: 'font-size:18px', type: "submit" %>
+            </div>
+            <div class="app">
+              <p>Available soon on</p>
+              <%= link_to root_path do %>
+                <%= image_tag ('pstore.png'), class: 'appstore'%>
+              <% end %>
+              <%= link_to root_path do %>
+                <%= image_tag ('astore.png'), class: 'appstore'%>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="clear"></div>
+<section id="whyTuckerbox">
+  <div class="container">
+    <div class="whyTuckerbox">
+      <h2>WHY USE TUCKERBOX ?</h2>
+      <div class="border-bottom"></div>
+        <div class="inside">
+             <div class="answer col-md-6">
+                 <div class="iconWhy"><%= image_tag "chef.png", :class => 'fadeLeft' %></div>
+                 <div class="detail">
+                    <h4>Local Talent</h4>
+                    Discover talented local cooks from around your neighbourhood with reviews from the community.
+                 </div>
+             </div>
+
+             <div class="answer col-xs-6">
+                 <div class="detailRight">
+                    <h4>Quality</h4>
+                    Buy from creative and passionate people who care about the quality of their produce
+                 </div>
+                 <div class="iconWhyRight"><%= image_tag "quality.png", :class => 'fadeRight' %></div>
+             </div>
+
+             <div class="clear"></div>
+
+             <div class="answer col-xs-6">
+                 <div class="iconWhy"><%= image_tag "control.png", :class => 'fadeLeft' %></div>
+                 <div class="detail">
+                    <h4>Always In Control</h4>
+                    Choose what to sell, how much to sell, when to sell and who to sell it to. We’ll notify you instantly as soon as an order goes through.
+
+                 </div>
+             </div>
+
+             <div class="answer col-xs-6">
+                 <div class="detailRight">
+                     <h4>Safe</h4>
+                    Chat with buyers and sellers before deciding on a purchase.
+                 </div>
+                 <div class="iconWhyRight"><%= image_tag "safe.png", :class => 'fadeRight' %></div>
+             </div>
+
+             <div class="clear"></div>
+
+             <div class="answer col-xs-6">
+                 <div class="iconWhy"><%= image_tag "secure.png", :class => 'fadeLeft' %></div>
+                 <div class="detail">
+                    <h4>Secure</h4>
+                    Transact via a secure payment platform. Funds are held in escrow until transaction is complete.
+                 </div>
+             </div>
+
+             <div class="answer col-xs-6">
+                 <div class="detailRight">
+                    <h4>Build A Following</h4>
+                    Start growing your home-based business by easily promoting your products in- app and on popular social media sites with a click of a button.
+                 </div>
+                 <div class="iconWhyRight"><%= image_tag "followers.png", :class => 'fadeRight' %></div>
+             </div>
+
+             <div class="clear"></div>
+
+             <div class="answer col-xs-6">
+                 <div class="iconWhy"><%= image_tag "friend.png", :class => 'fadeLeft' %></div>
+                 <div class="detail">
+                    <h4>Make A New Friend</h4>
+                    Did you know that you are able determine a person’s personality by what they choose to eat? Join TuckerBox to discover if that statement is true. We guarantee you’ll make some new friends in the process.
+                 </div>
+             </div>
+
+             <div class="answer col-xs-6">
+                 <div class="detailRight">
+                    <h4>Easy To Use</h4>
+                    Snap a photo, enter a few details about your product and you're ready to sell. It's that simple!
+                 </div>
+                 <div class="iconWhyRight"><%= image_tag "easy.png", :class => 'fadeRight' %></div>
+             </div>
+
+
+        </div>
+       </div>
+  </div>
+</section>
+<section id="howtuckerbox">
+  <div class="container-fluid grey">
+     <div class="howTuckerbox">
+         <h2>HOW DOES TUCKERBOX WORK?</h2>
+         <div class="border-bottom"></div>
+         <div class="inside">
+          <%= image_tag "flowchart.png" %>
+          <%= image_tag "flowchart_portrait.png" %>
+         </div>
+     </div>
+  </div>
+</section>
+<%= content_for(:extra_js) do %>
+  <script type="text/javascript">
+    $( document ).ready(function(){
+      $("input[type='radio']").change(function () {
+        if ($(this).val() == "Feeder") {
+           $("#invitebtn").html('I want to feed the masses');
+        }else {
+           $("#invitebtn").html('I want to tuck in');
+        }
+      });
+    });
+
+    $(function(){
+      <% if @notif.blank? %>
+        notif("<%= flash[:notice] %>", "error")
+      <% else %>
+        notif("<%= flash[:notice] %>", "<%= @notif %>")
+      <% end %>
+    });
+
+    function isElementInViewport(elem) {
+      var $elem = $(elem);
+
+      // Get the scroll position of the page.
+      var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
+      var viewportTop = $(scrollElem).scrollTop();
+      var viewportBottom = viewportTop + $(window).height();
+
+      // Get the position of the element on the page.
+      var elemTop = Math.round( $elem.offset().top );
+      var elemBottom = elemTop + $elem.height();
+
+      return ((elemTop < viewportBottom) && (elemBottom > viewportTop));
+    }
+
+    // Check if it's time to start the animation.
+    function leftAnimation() {
+      var $elem = $('.fadeLeft');
+
+      // If the animation has already been started
+      if ($elem.hasClass('fadeInLeft animated')) return;
+
+      if (isElementInViewport($elem)) {
+          // Start the animation
+          $elem.addClass('fadeInLeft animated');
+      }
+    }
+
+    function rightAnimation() {
+      var $elem = $('.fadeRight');
+
+      // If the animation has already been started
+      if ($elem.hasClass('fadeInRight animated')) return;
+
+      if (isElementInViewport($elem)) {
+          // Start the animation
+          $elem.addClass('fadeInRight animated');
+      }
+    }
+
+    // Capture scroll events
+    $(window).scroll(function(){
+      leftAnimation(); rightAnimation();
+    });
+  </script>
+<% end %>

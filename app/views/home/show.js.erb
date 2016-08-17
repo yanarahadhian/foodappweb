@@ -1,0 +1,7 @@
+$('#items').append('<%= escape_javascript(render("items", items: @items)) %>');
+<% if @items.next_page %>
+  $('.pagination').replaceWith('<%= j paginate(@items) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>
+<% sleep 1 %>

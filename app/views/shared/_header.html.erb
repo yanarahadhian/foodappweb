@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default whiteSolid">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <%= link_to root_path, :class => 'navbar-brand' do %>
+        <%= image_tag "tuckbox_logo.png" %><strong class="small-gap-top">TUCKERBOX</strong>
+      <% end %>
+      <div id="social" class="nav pull-right menu">
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation">
+            <%= link_to "https://www.facebook.com/tuckerboxapp", target: "_blank" do%>
+              <i class="fa fa-facebook"></i>
+            <% end %>
+          </li>
+          <li role="presentation">
+            <%= link_to "https://twitter.com/tuckerboxapp", target: "_blank" do%>
+              <i class="fa fa-twitter"></i>
+            <% end %>
+          </li>
+          <li role="presentation">
+            <%= link_to "https://www.instagram.com/tuckerboxapp/", target: "_blank" do%>
+              <i class="fa fa-instagram"></i>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
